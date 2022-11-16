@@ -1,15 +1,12 @@
 import { spawn } from 'child_process';
-import { dirname, join, resolve } from 'path';
-import { fileURLToPath } from 'url';
+import { setPath } from '../helper/setPath.js';
 
-const curFile = fileURLToPath(import.meta.url);
-const curDirName = dirname(curFile);
-const childFile = resolve(curDirName, 'files/script.js');
+const childFilePath = setPath(import.meta.url, 'files/script.js');
 
 const spawnChildProcess = async (args) => {
   const childArgs = args.split(' ');
 
-  const child = spawn('node', [childFile, ...childArgs]);
+  const child = spawn('node', [childFilePath, ...childArgs]);
 
   process.stdin.on('data', (chunk) => {
     console.log(`
